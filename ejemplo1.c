@@ -20,8 +20,8 @@ char array1[] = "Foo" "bar";
 char array2[] = { 'F', 'o', 'o', 'b', 'a', 'r', '\0' };
  
 enum { BUFFER_MAX_SIZE = 1024 };
- 
-const char* s1 = R"foo(
+ //esta R???
+const char* s1 = R"foo( 
 Hello
 World
 )foo";
@@ -31,14 +31,15 @@ void gets_example_func(void) {
   char buf[BUFFER_MAX_SIZE];
  
   if (fgets(buf, sizeof(buf), stdin) == NULL) {
-        return 1;
+        //return 1; //return en un void, puede salirse del espacio asignado.
+        return ;
   }
   buf[strlen(buf) - 1] = '\0';
 }
-
+//    const_cast<char*>(data.str().c_str())
 const char *get_dirname(const char *pathname) {
   char *slash;
-  slash = strrchr(pathname, '/');
+  slash = strrchr(pathname, '/');  //usando gcc NO da error, con g++ peta por conversion de const char* a char* (en c++ no se hce asi)
   if (slash) {
     *slash = '\0'; /* Undefined behavior */
   }
@@ -50,8 +51,9 @@ void get_y_or_n(void) {
 	char response[8];
 
 	printf("Continue? [y] n: ");  
-	gets(response);
-
+	//gets(response); //recomendado no usar, cambiar por fgets ¿?
+  fgets(response, 8, stdin);
+  
 	if (response[0] == 'n') 
 		exit(0);  
 
