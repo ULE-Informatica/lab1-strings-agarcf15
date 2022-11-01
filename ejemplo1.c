@@ -20,7 +20,7 @@ char array1[] = "Foo" "bar";
 char array2[] = { 'F', 'o', 'o', 'b', 'a', 'r', '\0' };
  
 enum { BUFFER_MAX_SIZE = 1024 };
- //esta R???
+ //la R es para que esa un string "crudo", para que no se pierda nada. C no lo lee
 const char* s1 = R"foo( 
 Hello
 World
